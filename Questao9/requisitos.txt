@@ -1,0 +1,20 @@
+- MODELO DE NEGÓCIO: Gerenciamento de Coleção de CDS de Adriano.
+
+- REQUISITOS FUNCIONAIS
+RF001 - CADASTRAR CDs;
+RF002 - CADASTRAR NOME OU CONJUNTOS DE CANTORES;
+RF003 - CADASTRAR TÍTULO CD;
+RF004 - CADASTRAR ANO DE LANÇAMENTO;
+RF005 - GERENCIAR LISTA DE COLEÇÃO DE CDs;
+RF006 - GERENCIAR COLETANEA;
+RF007 - GERENCIAR MUSICO;
+RF008 - GERENCIAR MUSICA.
+
+
+- REQUISITOS NÃO-FUNCIONAIS
+RNF001 [SEGURANÇA] - PARA TODOS OS USUÁRIOS DO SISTEMA A SENHA DEVE SER CRIPTOGRAFADA NO BANCO EM 100% DOS CASOS;
+RNF002 [DESEMPENHO] - PARA TODAS AS TELAS DO SISTEMA O TEMPO RESPOSTA É <= 2 SEGUNDOS EM 90% DOS CASOS.
+
+
+- ENGENHARIA DE PROMPT
+Eu como engenheiro de software sênior, modelei um sistema de gerenciamento de coleção de CDS, agora mais sofisticada e com mais funcionalidades (uma nova versão da anterior), conforme imagem, requisitos funcionais e não funcionais em anexo. Construa uma aplicação web com a linguagem Python e o framework Streamlit, em um único arquivo, com todas as especificações identificadas e testadas.
