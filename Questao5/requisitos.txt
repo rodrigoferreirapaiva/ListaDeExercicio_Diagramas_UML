@@ -1,0 +1,15 @@
+- REQUISITOS FUNCIONAIS
+RF001 - GERENCIAR TIPOS DE GASTOS;
+RF002 - GERENCIAR GASTOS;
+RF003 - LISTAR FORMAS DE PAGAMENTO;
+RF004 - GERAR RELATÓRIO MENSAL DOS GASTOS;
+
+
+- REQUISITOS NÃO-FUNCIONAIS
+RNF001 [SEGURANÇA] - PARA TODOS OS USUÁRIOS DO SISTEMA A SENHA DEVE SER CRIPTOGRAFADA NO BANCO EM 100% DOS CASOS;
+RNF002 [DESEMPENHO] - PARA TODAS AS TELAS DO SISTEMA O TEMPO RESPOSTA É <= 2 SEGUNDOS EM 90% DOS CASOS.
+
+
+- ENGENHARIA DE PROMPT
+Eu como engenheiro de software, modelei um sistema de controle de gastos diários que se referem a uma planilha de gastos do Excel, conforme imagem, requisitos funcionais e não funcionais em anexo. 
+Construa uma aplicação web com a linguagem Python e o framework Streamlit, em um único arquivo, com todas as especificações identificadas e testadas.
