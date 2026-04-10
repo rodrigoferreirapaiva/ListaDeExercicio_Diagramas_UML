@@ -1,0 +1,158 @@
+import streamlit as st
+import hashlib
+import time
+from datetime import date
+
+# ==========================================
+# RNF002 [DESEMPENHO] - Tracker de tempo
+# ==========================================
+start_time = time.time()
+
+# ==========================================
+# RNF001 [SEGURANÇA] - Criptografia de Senha
+# ==========================================
+def criptografar_senha(senha):
+    """Criptografa a senha usando SHA-256 simulando o banco de dados em 100% dos casos."""
+    return hashlib.sha256(senha.encode()).hexdigest()
+
+# Banco de dados simulado em memória
+USUARIOS_DB = {
+    "admin": criptografar_senha("123456")
+}
+
+# ==========================================
+# MODELAGEM DE CLASSE (UML)
+# ==========================================
+class ContaDeLuz:
+    def __init__(self, data_leitura, num_leitura, kw_mes, valor_pagar, data_pagamento, media_cons):
+        # Atributos privados conforme UML (-)
+        self.__data_leitura = data_leitura
+        self.__num_leitura = num_leitura
+        self.__kw_mes = kw_mes
+        self.__valor_pagar = valor_pagar
+        self.__data_pagamento = data_pagamento
+        self.__media_cons = media_cons
+
+    # Propriedades para acessar os atributos privados na interface
+    @property
+    def kw_mes(self):
+        return self.__kw_mes
+    
+    @property
+    def dicionario_dados(self):
+        return {
+            "Data Leitura": self.__data_leitura,
+            "Núm Leitura": self.__num_leitura,
+            "KW Mês": self.__kw_mes,
+            "Valor a Pagar": self.__valor_pagar,
+            "Data Pagamento": self.__data_pagamento,
+            "Média Consumo": self.__media_cons
+        }
+
+    # Métodos públicos conforme UML (+)
+    @staticmethod
+    def menor_cons(lista_contas):
+        if not lista_contas:
+            return 0
+        return min(conta.kw_mes for conta in lista_contas)
+
+    @staticmethod
+    def maior_cons(lista_contas):
+        if not lista_contas:
+            return 0
+        return max(conta.kw_mes for conta in lista_contas)
+
+
+# ==========================================
+# INTERFACE WEB (STREAMLIT)
+# ==========================================
+st.set_page_config(page_title="Sistema de Energia", layout="centered")
+
+# Inicialização de estado para manter os dados salvos em memória durante a sessão
+if 'logado' not in st.session_state:
+    st.session_state['logado'] = False
+if 'contas' not in st.session_state:
+    st.session_state['contas'] = []
+
+def tela_login():
+    st.title("🔐 Login do Sistema")
+    st.info("Usuário: admin | Senha: 123456")
+    
+    usuario = st.text_input("Usuário")
+    senha = st.text_input("Senha", type="password")
+    
+    if st.button("Entrar"):
+        senha_criptografada = criptografar_senha(senha)
+        if usuario in USUARIOS_DB and USUARIOS_DB[usuario] == senha_criptografada:
+            st.session_state['logado'] = True
+            st.rerun()
+        else:
+            st.error("Usuário ou senha incorretos.")
+
+def tela_principal():
+    st.title("⚡ Gerenciamento de Consumo de Energia")
+    
+    if st.button("Sair"):
+        st.session_state['logado'] = False
+        st.rerun()
+        
+    st.header("Cadastrar Nova Conta")
+    
+    # Formulário para os Requisitos Funcionais
+    with st.form("form_conta"):
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            # RF001
+            data_leitura = st.date_input("Data da Leitura")
+            # RF003
+            kw_mes = st.number_input("KW Mensal", min_value=0, step=1)
+            # RF005
+            data_pagamento = st.date_input("Data de Pagamento")
+            
+        with col2:
+            # RF002
+            num_leitura = st.number_input("Número da Leitura", min_value=0, step=1)
+            # RF004
+            valor_pagar = st.number_input("Valor a Pagar (R$)", min_value=0.0, step=0.1)
+            # RF006
+            media_cons = st.number_input("Média de Consumo", min_value=0.0, step=0.1)
+            
+        submit = st.form_submit_button("Salvar Conta")
+        
+        if submit:
+            nova_conta = ContaDeLuz(
+                data_leitura, num_leitura, kw_mes, 
+                valor_pagar, data_pagamento, media_cons
+            )
+            st.session_state['contas'].append(nova_conta)
+            st.success("Conta cadastrada com sucesso!")
+
+    st.divider()
+    
+    # Exibição dos dados e métodos da UML
+    st.header("📊 Análise de Consumo")
+    if st.session_state['contas']:
+        st.write("### Contas Cadastradas")
+        dados_tabela = [conta.dicionario_dados for conta in st.session_state['contas']]
+        st.dataframe(dados_tabela)
+        
+        col_menor, col_maior = st.columns(2)
+        # Testando os métodos +menor_cons() e +maior_cons()
+        with col_menor:
+            st.metric("Menor Consumo Registrado (KW)", ContaDeLuz.menor_cons(st.session_state['contas']))
+        with col_maior:
+            st.metric("Maior Consumo Registrado (KW)", ContaDeLuz.maior_cons(st.session_state['contas']))
+    else:
+        st.info("Nenhuma conta cadastrada ainda.")
+
+# Controle de rotas
+if not st.session_state['logado']:
+    tela_login()
+else:
+    tela_principal()
+
+# Validação do RNF002 (Desempenho <= 2 segundos)
+end_time = time.time()
+tempo_execucao = end_time - start_time
+st.caption(f"⏱️ Tempo de resposta da tela: {tempo_execucao:.4f} segundos")
