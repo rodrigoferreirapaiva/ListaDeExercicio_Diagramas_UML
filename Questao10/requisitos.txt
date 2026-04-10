@@ -1,0 +1,19 @@
+- MODELO DE NEGÓCIO: Gerenciamento de Salas de Reunião da Secretária Patrícia
+
+- REQUISITOS FUNCIONAIS
+RF001 - GERENCIAR CONTROLE DAS SALAS DE REUNIÃO;
+RF002 - GERENCIAR PASTA DE TRABALHO EM EXCEL;
+RF003 - GERENCIAR REUNIÕES QUE HAVERÁ EM CADA DIA DOS MÊS;
+RF004 - GERENCIAR FUNCIONÁRIOS;
+RF005 - GERENCIAR DATA E HORARIO QUE A SALA ESTARÁ LIVRE;
+RF006 - GERENCIAR NUMERO DE LUGARES DAS SALAS;
+
+
+
+- REQUISITOS NÃO-FUNCIONAIS
+RNF001 [SEGURANÇA] - PARA TODOS OS USUÁRIOS DO SISTEMA A SENHA DEVE SER CRIPTOGRAFADA NO BANCO EM 100% DOS CASOS;
+RNF002 [DESEMPENHO] - PARA TODAS AS TELAS DO SISTEMA O TEMPO RESPOSTA É <= 2 SEGUNDOS EM 90% DOS CASOS.
+
+
+- ENGENHARIA DE PROMPT
+Eu como engenheiro de software sênior, modelei um sistema de gerenciamento salas de reuniões, conforme imagem, requisitos funcionais e não funcionais em anexo. Construa uma aplicação web com a linguagem Python e o framework Streamlit, em um único arquivo, com todas as especificações identificadas e testadas.
